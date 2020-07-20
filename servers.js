@@ -1,3 +1,4 @@
+// Servers.js is for creating socketio server and express server
 const express = require('express');
 const app = express();
 app.use(
@@ -11,3 +12,9 @@ const io = socketio(expressServer);
 app.use(helmet);
 
 console.log("Express and socketio are listening on port 8080");
+
+// App organisation
+module.exports = {
+    app,
+    io
+};
