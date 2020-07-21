@@ -120,3 +120,56 @@ canvas{
 #create-team-btn, #add-team-btn, #join-team-btn{
 	background-color: #00e600;
 }
+
+.btn-github{
+	background-image: url("/images/GitHub-Mark-Light-32px.png") !important;
+	color: #fff;
+    background-color: #444;
+	border-color: rgba(0,0,0,0.2);
+	background-repeat: no-repeat;
+	background-position: 5px;
+}
+.btn-github:hover{
+	color: rgba(200,200,200,0.5);
+}
+
+.stats-btn{
+	width: 48%;
+	margin: 0 auto 15px;
+	font-size: 18px;	
+	display: inline-block;
+	background-color: #e600e6;
+	color: #FFFFFF;
+}
+
+#create-button{
+	font-size: 20px;	
+	display: block;
+	margin: 5px auto 5px;
+	width: 90%;
+	background-color: #00e600;
+	color: #FFFFFF;
+}
+
+#playerStats-all-btn, #playerStats-player-btn{
+	font-size: 20px;	
+	display: block;
+	margin: 5px auto 5px;
+	width: 90%;
+	background-color: #e600e6;
+	color: #FFFFFF;
+}
+
+.stats-btn-wrapper, .play-btn-wrapper{
+	width: 90%;
+	margin: auto;
+}
+
+.btn-wrapper{
+	width: 90%;
+	margin: 20px auto;
+}
+
+.player-stats-btn, #join-team-btn, #create-team-btn, #add-team-btn{
+	float: left;
+}
