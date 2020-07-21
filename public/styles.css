@@ -93,3 +93,30 @@ canvas{
 	padding: 5px;
 	border-radius: 5px;
 }
+
+.error-message{
+    font-size: 13px;
+    color: #e60000;
+}
+
+.play-button{
+    font-size: 20px;
+    display: block;
+    margin: 5px auto 5px;
+    width: 90%;
+    background-color: #00e6e6;
+    color: #FFFFFF;
+}
+
+#join-team-btn, #play-solo-btn, #create-team-btn, #create-play-solo-btn, #add-team-btn{
+	width: 48%;
+	margin: 5px auto 15px;
+	font-size: 18px;	
+	display: inline-block;
+	background-color: #00e6e6;
+	color: #FFFFFF;
+}
+
+#create-team-btn, #add-team-btn, #join-team-btn{
+	background-color: #00e600;
+}
