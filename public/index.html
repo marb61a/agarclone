@@ -37,8 +37,36 @@
         </div>
         <!-- Modals -->
         <!-- Login Modal -->
-        <div id="loginModal">
-
+        <div id="loginModal" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-sm">
+                <!-- Modal Content -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h2 class="modal-title text-center">Agar Clone</h2>
+                    </div>
+                    <div class="modal-body">
+                        <button type="submit" class="btn play-button btn-github">Login with github</button>
+                        <form class="name-form">
+                            <div class="text-center error-message"></div>
+                            <button type="submit" class="btn play-button play-guest">Play as a Guest</button>
+                            <input id="name-input" class="text-input text-center form-control" type="text" name="name-input" placeholder="Enter your name here" required>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <div id="instructions">
+                            <label id="how-to-play">How to play:</label>
+                            <ul>
+                                <li>Move your mouse on the screen to move your character.</li>
+                                <li>Absorb orbs by running over them in order to grow your character.</li>
+                                <li>The larger you get the slower you are.</li>
+                                <li>Objective: Absorb other players to get even larger but not lose speed.</li>
+                                <li>The larger player absorbs the smaller player.</li>                                
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Start Modal -->
@@ -48,5 +76,6 @@
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>    
+        <script src="uiStuff.js"></script>
     </body>
 </html>
