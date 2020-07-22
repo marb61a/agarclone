@@ -27,7 +27,9 @@ $('.name-form').submit((event) => {
     document.querySelector('.player-name').innerHTML = player.name;
 });
 
-// Event is not needed here as there is not default behaviour
+// Event is not compulsory here as there is not default behaviour
 $('.start-game').click((event) => {
-
+    $('.modal').modal('hide');
+    $('.hiddenOnStart').removeAttr('hidden');
+    init();
 });
