@@ -7,6 +7,19 @@ let randomX = Math.floor(500 * Math.random() + 10);
 let randomY = Math.floor(500 * Math.random() + 10);
 
 function draw(){
+    // Clears the screen so that the previous frame is removed
+    context.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Resets the translation back to the default
+    context.setTransform(1, 0, 0, 1, 0, 0);
+
+    // Clamps the camera to the player
+    const camX = player.locX + canvas.width / 2;
+    const camY = player.locY + canvas.height / 2;
+
+    // Translate will allow for moving the canvas around
+    context.translate(camX, camY);
+
     context.beginPath();
     context.fillStyle = 'rgb(255,0,0)';
 
@@ -16,7 +29,8 @@ function draw(){
     // this is in radians, 0 radians is 3 O'Clock on the circle
     // Arg 5 is where to stop again in radians, PI * 2 is equal
     // to a full circle
-    context.arc(randomX, randomY, 10, 0, Math.PI * 2);
+    context.arc(player.locX, player.locY, 10, 0, Math.PI * 2);
+    context.arc(200, 200, 10, 0, Math.PI * 2);
     context.fill();
 
     // Set a border
