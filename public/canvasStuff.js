@@ -3,15 +3,15 @@ function init(){
 }
 
 // =========== DRAWING ==========
-let randomX = Math.floor(500 * Math.random() + 10);
-let randomY = Math.floor(500 * Math.random() + 10);
+player.locX = Math.floor(500 * Math.random() + 100);
+player.locY = Math.floor(500 * Math.random() + 100);
 
 function draw(){
-    // Clears the screen so that the previous frame is removed
-    context.clearRect(0, 0, canvas.width, canvas.height);
-
     // Resets the translation back to the default
     context.setTransform(1, 0, 0, 1, 0, 0);
+
+    // Clears the screen so that the previous frame is removed
+    context.clearRect(0, 0, canvas.width, canvas.height);
 
     // Clamps the camera to the player
     const camX = player.locX + canvas.width / 2;
@@ -21,7 +21,7 @@ function draw(){
     context.translate(camX, camY);
 
     context.beginPath();
-    context.fillStyle = 'rgb(255,0,0)';
+    context.fillStyle = 'rgb(255,230,230)';
 
     // Creates an arc which can become a circle
     // Arg 1,2 are the x,y of the center of the circle
@@ -30,7 +30,7 @@ function draw(){
     // Arg 5 is where to stop again in radians, PI * 2 is equal
     // to a full circle
     context.arc(player.locX, player.locY, 10, 0, Math.PI * 2);
-    context.arc(200, 200, 10, 0, Math.PI * 2);
+    // context.arc(200, 200, 10, 0, Math.PI * 2);
     context.fill();
 
     // Set a border
@@ -40,7 +40,9 @@ function draw(){
 
     orbs.forEach((orb) => {
         context.beginPath();
-        
+        context.fillStyle = orb.color;
+        context.arc(orb.locX, orb.locY, orb.radius, 0, Math.PI * 2);
+        context.fill();
     });
 
     requestAnimationFrame(draw);
