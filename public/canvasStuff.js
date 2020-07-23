@@ -37,6 +37,12 @@ function draw(){
     context.lineWidth = 3;
     context.strokeStyle = 'rgb(0,255,0)';
     context.stroke();
+
+    orbs.forEach((orb) => {
+        context.beginPath();
+        
+    });
+
     requestAnimationFrame(draw);
 
 }
