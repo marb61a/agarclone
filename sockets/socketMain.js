@@ -46,8 +46,26 @@ io.sockets.on('connect', (socket) => {
         });
 
         players.push(playerData);
-    })
+    });
     
+    // Server has sent over a tick so the direction to move player is now known
+    socket.on('tick', (data) => {
+        speed = player.playerConfig.speed;
+
+        // Updates the playerConfig object with the new direction in data
+        // Simultaneously create a local variable for this callback to improve readability
+        xV = data.PlayerConfig.xVector = data.xVector;
+        yV = data.PlayerConfig.yVector = data.yVector;
+    
+        if((player.playerData.locX < 5 && player.playerData.xVector < 0) || (player.playerData.locX > 500) && (xV > 0)){
+            player.playerData.locY -= speed * yV;
+        }else if((player.playerData.locY < 5 && yV > 0) || (player.playerData.locY > 500) && (yV < 0)){
+            player.playerData.locX += speed * xV;
+        }else{
+            player.playerData.locX += speed * xV;
+            player.playerData.locY -= speed * yV;
+        } 
+    })
 });
 
 // Ran at the beginning of a new game
