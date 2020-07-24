@@ -16,24 +16,28 @@ function draw(){
     // Translate will allow for moving the canvas around
     context.translate(camX, camY);
 
-    context.beginPath();
-    context.fillStyle = 'rgb(255,230,230)';
+    // Draw all players
+    players.forEach((p) => {
+        context.beginPath();
+        context.fillStyle = p.color;
 
-    // Creates an arc which can become a circle
-    // Arg 1,2 are the x,y of the center of the circle
-    // Arg 3 is the radius, Arg 4 is where on the circle to start
-    // this is in radians, 0 radians is 3 O'Clock on the circle
-    // Arg 5 is where to stop again in radians, PI * 2 is equal
-    // to a full circle
-    context.arc(player.locX, player.locY, 10, 0, Math.PI * 2);
-    // context.arc(200, 200, 10, 0, Math.PI * 2);
-    context.fill();
+        // Creates an arc which can become a circle
+        // Arg 1,2 are the x,y of the center of the circle
+        // Arg 3 is the radius, Arg 4 is where on the circle to start
+        // this is in radians, 0 radians is 3 O'Clock on the circle
+        // Arg 5 is where to stop again in radians, PI * 2 is equal
+        // to a full circle
+        context.arc(p.locX, p.locY, 10, 0, Math.PI * 2);
+        // context.arc(200, 200, 10, 0, Math.PI * 2);
+        context.fill();
 
-    // Set a border
-    context.lineWidth = 3;
-    context.strokeStyle = 'rgb(0,255,0)';
-    context.stroke();
+        // Set a border
+        context.lineWidth = 3;
+        context.strokeStyle = 'rgb(0,255,0)';
+        context.stroke();
+    })
 
+    // Draw all orbs
     orbs.forEach((orb) => {
         context.beginPath();
         context.fillStyle = orb.color;
@@ -67,6 +71,9 @@ canvas.addEventListener('mousemove', (event) => {
         xVector = (angleDeg+90)/90;
         yVector = (1 - ((angleDeg+90)/90));
     }
+
+    player.xVector = xVector;
+    player.yVector = yVector;
 
     speed = 10;
     xV = xVector;

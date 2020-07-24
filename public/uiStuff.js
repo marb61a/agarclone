@@ -5,6 +5,7 @@ let wWidth = $(window).width();
 let player = {};
 
 let orbs = [];
+let players = [];
 
 let canvas = document.querySelector('#the-canvas');
 // Can be set to either 2d or Webgl\2

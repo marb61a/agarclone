@@ -12,8 +12,12 @@ function init(){
 
 socket.on('initReturn', (data) => {
     orbs = data.orbs
+
+    setInterval(() => {
+        
+    })
 });
 
 socket.on('tock', (data) => {
-
+    players = data.players
 });
