@@ -22,14 +22,9 @@ let settings = {
 
 initGame();
 
-// Issue a message to every connected socket to run at 30FPS
-setInterval(() => {
-    io.to('.game').emit('tock', {
-        players
-    });
-}, 33);
-
 io.sockets.on('connect', (socket) => {
+    let player = {};
+
     // A player has connected
     socket.on('init', (data) => {
         // Add the playe to the game namespace
@@ -40,7 +35,17 @@ io.sockets.on('connect', (socket) => {
         // Make a PlayerData object
         let playerData = new PlayerData(data.playerName, settings);
         // Make a master player object to hold both of the above
-        let player = new Player(socket.id, playerConfig, playerData)
+        player = new Player(socket.id, playerConfig, playerData);
+
+        // Issue a message to every connected socket to run at 30FPS
+        setInterval(() => {
+            io.to('.game').emit('tock', {
+                players,
+                playerX: player.playerData.locX,
+                playerY: player.playerData.locY
+            });
+        }, 33);
+
         socket.emit('initReturn', {
             orbs
         });
@@ -54,8 +59,8 @@ io.sockets.on('connect', (socket) => {
 
         // Updates the playerConfig object with the new direction in data
         // Simultaneously create a local variable for this callback to improve readability
-        xV = data.PlayerConfig.xVector = data.xVector;
-        yV = data.PlayerConfig.yVector = data.yVector;
+        xV = player.PlayerConfig.xVector = data.xVector;
+        yV = player.PlayerConfig.yVector = data.yVector;
     
         if((player.playerData.locX < 5 && player.playerData.xVector < 0) || (player.playerData.locX > 500) && (xV > 0)){
             player.playerData.locY -= speed * yV;
