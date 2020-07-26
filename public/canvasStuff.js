@@ -47,7 +47,7 @@ function draw(){
 }
 
 canvas.addEventListener('mousemove', (event) => {
-    console.log(event);
+    // console.log(event);
 
     const mousePosition = {
         x: event.clientX,

@@ -9,7 +9,7 @@ const PlayerData = require('./classes/PlayerData');
 const PlayerConfig = require('./classes/PlayerConfig');
 const Orb = require('./classes/Orb');
 
-let orbs =[];
+let orbs = [];
 let players = [];
 let settings = {
     defaultOrbs: 500,
@@ -25,9 +25,11 @@ initGame();
 
 // Issue a message to every connected socket to run at 30FPS
 setInterval(() => {
-    io.to('.game').emit('tock', {
-        players,
-    });
+    if(players.length > 0){
+        io.to('.game').emit('tock', {
+            players,
+        });
+    }
 }, 33);
 
 io.sockets.on('connect', (socket) => {
@@ -47,7 +49,7 @@ io.sockets.on('connect', (socket) => {
 
         // Issue a message to this 
         setInterval(() => {
-            io.to('.game').emit('tickTock', {
+            socket.emit('tickTock', {
                 playerX: player.playerData.locX,
                 playerY: player.playerData.locY
             });
@@ -69,9 +71,9 @@ io.sockets.on('connect', (socket) => {
         xV = player.PlayerConfig.xVector = data.xVector;
         yV = player.PlayerConfig.yVector = data.yVector;
     
-        if((player.playerData.locX < 5 && player.playerData.xVector < 0) || (player.playerData.locX > 500) && (xV > 0)){
+        if((player.playerData.locX < 5 && player.playerData.xVector < 0) || (player.playerData.locX > settings.worldWidth) && (xV > 0)){
             player.playerData.locY -= speed * yV;
-        }else if((player.playerData.locY < 5 && yV > 0) || (player.playerData.locY > 500) && (yV < 0)){
+        }else if((player.playerData.locY < 5 && yV > 0) || (player.playerData.locY > settings.worldHeight) && (yV < 0)){
             player.playerData.locX += speed * xV;
         }else{
             player.playerData.locX += speed * xV;
@@ -103,7 +105,9 @@ io.sockets.on('connect', (socket) => {
         let playerDeath = checkForPlayerCollisions(player.playerData,player.playerConfig,players,player.socketId)
         playerDeath.then((data) => {
             // console.log('Player collision');
-
+            // Every socket needs to know that the leaderboard has changed
+            io.sockets.emit('updateLeaderBoard',getLeaderBoard());
+            
         })
         .catch(() => {
 
