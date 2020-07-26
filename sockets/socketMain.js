@@ -1,6 +1,7 @@
 // Where socketio stuff goes
 const io = require('../servers').io;
-const Orb = require('./classes/Orb');
+const checkForOrbCollisions = require('./checkCollisions').checkForOrbCollisions;
+const checkForPlayerCollisions = require('./checkCollisions').checkForPlayerCollisions;
 
 // =========== Classes ==========
 const Player = require('./classes/Player');
@@ -22,6 +23,13 @@ let settings = {
 
 initGame();
 
+// Issue a message to every connected socket to run at 30FPS
+setInterval(() => {
+    io.to('.game').emit('tock', {
+        players,
+    });
+}, 33);
+
 io.sockets.on('connect', (socket) => {
     let player = {};
 
@@ -37,10 +45,9 @@ io.sockets.on('connect', (socket) => {
         // Make a master player object to hold both of the above
         player = new Player(socket.id, playerConfig, playerData);
 
-        // Issue a message to every connected socket to run at 30FPS
+        // Issue a message to this 
         setInterval(() => {
-            io.to('.game').emit('tock', {
-                players,
+            io.to('.game').emit('tickTock', {
                 playerX: player.playerData.locX,
                 playerY: player.playerData.locY
             });
@@ -71,6 +78,20 @@ io.sockets.on('connect', (socket) => {
             player.playerData.locY -= speed * yV;
         } 
     })
+});
+
+// Orb collision
+let capturedOrb = checkForOrbCollisions(player.playerData,player.playerConfig,orbs,settings);
+capturedOrb.then((data) => {
+    // The then will run if resolve runs
+    // Emits to all sockets the orb to replace
+    const orbData = {
+        orbIndex: data,
+        newOrb: orbs[data]
+    };
+
+    // Every socket needs to know that the leaderboard has changed
+
 });
 
 // Ran at the beginning of a new game
