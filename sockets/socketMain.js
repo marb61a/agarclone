@@ -76,22 +76,39 @@ io.sockets.on('connect', (socket) => {
         }else{
             player.playerData.locX += speed * xV;
             player.playerData.locY -= speed * yV;
-        } 
+        }
+
+        // Orb collision
+        let capturedOrb = checkForOrbCollisions(player.playerData,player.playerConfig,orbs,settings);
+        capturedOrb.then((data) => {
+            // The then will run if resolve runs which means a collision happened
+            // Emits to all sockets the orb to replace
+            const orbData = {
+                orbIndex: data,
+                newOrb: orbs[data]
+            };
+
+            // console.log(orbData);
+
+            // Every socket needs to know that the leaderboard has changed
+            io.sockets.emit('updateLeaderBoard', getLeaderBoard());
+            io.sockets.emit('orbSwitch', orbData);
+        })
+        .catch(() => {
+            // The catch will run if reject runs which means no collision
+            // console.log("No collision!")
+        });
+
+        // Player Collision
+        let playerDeath = checkForPlayerCollisions(player.playerData,player.playerConfig,players,player.socketId)
+        playerDeath.then((data) => {
+            // console.log('Player collision');
+
+        })
+        .catch(() => {
+
+        })
     })
-});
-
-// Orb collision
-let capturedOrb = checkForOrbCollisions(player.playerData,player.playerConfig,orbs,settings);
-capturedOrb.then((data) => {
-    // The then will run if resolve runs
-    // Emits to all sockets the orb to replace
-    const orbData = {
-        orbIndex: data,
-        newOrb: orbs[data]
-    };
-
-    // Every socket needs to know that the leaderboard has changed
-
 });
 
 // Ran at the beginning of a new game
