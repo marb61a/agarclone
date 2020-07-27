@@ -129,13 +129,14 @@ io.sockets.on('connect', (socket) => {
                 }
             });
 
-            const updateStats = `
-            UPDATE stats
-                SET highScore = CASE WHEN highScore < ? THEN ? ELSE highScore END,
-                mostOrbs = CASE WHEN mostOrbs < ? THEN ? ELSE mostOrbs END,
-                mostPlayers = CASE WHEN mostPlayers < ? THEN ? ELSE mostPlayers END
-            WHERE username = ?
-            `;
+            // If a db connection is set up
+            // const updateStats = `
+            // UPDATE stats
+            //     SET highScore = CASE WHEN highScore < ? THEN ? ELSE highScore END,
+            //     mostOrbs = CASE WHEN mostOrbs < ? THEN ? ELSE mostOrbs END,
+            //     mostPlayers = CASE WHEN mostPlayers < ? THEN ? ELSE mostPlayers END
+            // WHERE username = ?
+            // `;
         }
     });
 });
