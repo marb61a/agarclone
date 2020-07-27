@@ -81,7 +81,7 @@ io.sockets.on('connect', (socket) => {
         }
 
         // Orb collision
-        let capturedOrb = checkForOrbCollisions(player.playerData,player.playerConfig,orbs,settings);
+        let capturedOrb = checkForOrbCollisions(player.playerData, player.playerConfig, orbs, settings);
         capturedOrb.then((data) => {
             // The then will run if resolve runs which means a collision happened
             // Emits to all sockets the orb to replace
@@ -102,18 +102,37 @@ io.sockets.on('connect', (socket) => {
         });
 
         // Player Collision
-        let playerDeath = checkForPlayerCollisions(player.playerData,player.playerConfig,players,player.socketId)
+        let playerDeath = checkForPlayerCollisions(player.playerData, player.playerConfig, players, player.socketId)
         playerDeath.then((data) => {
             // console.log('Player collision');
             // Every socket needs to know that the leaderboard has changed
             io.sockets.emit('updateLeaderBoard',getLeaderBoard());
-            
+
+            // Tells everone that a player has been absorbed
+            io.sockets.emit('playerDeath', data);
         })
         .catch(() => {
-
+            // This catch runs if the reject runs as there is no collision
+            // console.log('No Player Collision');
         })
     })
 });
+
+function getLeaderBoard(){
+    // Sort players in descending order
+    players.sort((a, b) => {
+        return b.score - a.score;
+    });
+
+    let leaderBoard = players.map((curPlayer) => {
+        return {
+            name: curPlayer.name,
+            score: curPlayer.score
+        }
+    });
+
+    return leaderBoard;
+}
 
 // Ran at the beginning of a new game
 function initGame(){
