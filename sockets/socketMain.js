@@ -115,7 +115,29 @@ io.sockets.on('connect', (socket) => {
             // This catch runs if the reject runs as there is no collision
             // console.log('No Player Collision');
         })
-    })
+    });
+
+    socket.on('disconnect', (data) => {
+        // console.log(data);
+        // Finds out which player in players has left and makes sure player exists
+        if(player.playerData){
+            players.forEach((currPlayer, i) => {
+                // If the players match
+                if(currPlayer.uid == player.playerData.uid){
+                    players.splice(i, 1);
+                    io.sockets.emit('updateLeaderBoard', getLeaderBoard());
+                }
+            });
+
+            const updateStats = `
+            UPDATE stats
+                SET highScore = CASE WHEN highScore < ? THEN ? ELSE highScore END,
+                mostOrbs = CASE WHEN mostOrbs < ? THEN ? ELSE mostOrbs END,
+                mostPlayers = CASE WHEN mostPlayers < ? THEN ? ELSE mostPlayers END
+            WHERE username = ?
+            `;
+        }
+    });
 });
 
 function getLeaderBoard(){
