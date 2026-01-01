@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/marb61a/agarclone#readme",
   "dependencies": {
-    "express": "^4.21.2",
+    "express": "^4.22.1",
     "helmet": "^3.23.3",
     "socketio": "^1.0.0",
     "uuid": "^8.2.0"
